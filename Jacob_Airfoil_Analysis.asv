@@ -20,7 +20,7 @@ plot(f) % Plotting sc transformed plane
 ylabel('Imaginary w plane')
 xlabel('Real w place')
 title('Schwarz–Christoffel Mapped Plane')
-print("Figures/Mapped_Plane_of_" + convertCharsToStrings(Naca),'-dpng')
+print("Figures/Mapped_Plane_of_" + chart,'-dpng')
 
 %% Build polar grid INSIDE unit disk (exterior airfoil = interior disk)
 Nr     = 200; % Setting the number of radial grid points
@@ -70,7 +70,7 @@ xlim([-1 1]); ylim([-1.2 1.2]) % Limiting axis
 xlabel('x/c'); ylabel('y/c') % Labeling axis
 title(['NACA 0012 Streamlines (\alpha = ', num2str(rad2deg(-alpha)), '°)']) % Labeling plot
 grid on; box on
-print("Figures/Streamlines_Over_" + convertCharsToStrings(Naca),'-dpng')
+print("Figures/Streamlines_Over_" + Naca,'-dpng')
 
 %% Calcualting parameters
 % Finding the change in our function
@@ -115,7 +115,7 @@ ylabel('C_p');
 title(['Surface Pressure Coefficient | \alpha = ', num2str(rad2deg(-alpha)), '°']);
 legend('Location', 'northeast');
 set(gca, 'YDir', 'reverse');
-print("Figures/C_p_Over_" + convertCharsToStrings(Naca),'-dpng')
+print('Figures/C_p_Over_'+Naca,'-dpng')
 
 % Calculating chord
 chord = max(X_surf) - min(X_surf);
