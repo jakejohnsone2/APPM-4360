@@ -61,9 +61,9 @@ Psi(abs(W) > 0.98) = NaN; % Sets values close to airfoil surface to NaN
 %% Plot
 figure; hold on;
 
-psi_levels = linspace(-5, 5, 50); % Setting the stream lines
-contour(-Xp, -Yp, Psi, psi_levels, 'r', 'LineWidth', 0.7); % Plotting the streamlines
-fill(-real(z), -imag(z), [0.3 0.3 0.3], 'EdgeColor', 'k', 'LineWidth', 1.5); % Potting the airfoil
+psi_levels = linspace(-2, 2, 50); % Setting the stream lines
+contour(Xp, -Yp, Psi, psi_levels, 'r', 'LineWidth', 0.7); % Plotting the streamlines
+fill(real(z), -imag(z), [0.3 0.3 0.3], 'EdgeColor', 'k', 'LineWidth', 1.5); % Potting the airfoil
 
 axis equal % Setting axis to be equal so airfoil doesn't stretch
 xlim([-1 1]); ylim([-1.2 1.2]) % Limiting axis
@@ -121,5 +121,5 @@ print("Figures/C_p_Over_" + convertCharsToStrings(Naca),'-dpng')
 chord = max(X_surf) - min(X_surf);
 
 % Finding the Coefficient of lift
-Cl_integration = -trapz(X_surf, Cp_surf) / chord;
+Cl_integration = trapz(X_surf, Cp_surf) / chord;
 
