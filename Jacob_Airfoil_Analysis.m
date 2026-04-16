@@ -6,6 +6,16 @@ alpha = deg2rad(-alpha);
 U_inf  = input("Flow Velocity (m/s): "); % Setting the flow velocity
 
 [X, Y, ~, ~] = NACABuild(Naca, 300); % Building the NACA
+figure()
+plot(X,Y,'Color','b','LineWidth',2)
+ylabel('y/c')
+xlabel('x/c')
+title('NACA ' + convertCharsToStrings(Naca) + ' Airfoil Diagram')
+grid on
+axis equal
+print('Figures/NACA_' + convertCharsToStrings(Naca) + '_Airfoil','-dpng')
+
+
 X = X - 0.5; % Moving the airfoil so its centered at x=0
 z = X + 1i*Y; % Building the function
 z = flip(z);
@@ -17,9 +27,10 @@ f = extermap(p); % Mapping it to a disk
 
 figure() 
 plot(f) % Plotting sc transformed plane
-ylabel('Imaginary w plane')
-xlabel('Real w place')
 title('Schwarz–Christoffel Mapped Plane')
+ax = gca;
+ax.XAxis.Visible = 'off';
+ax.YAxis.Visible = 'off';
 print("Figures/Mapped_Plane_of_" + convertCharsToStrings(Naca),'-dpng')
 
 %% Build polar grid INSIDE unit disk (exterior airfoil = interior disk)
@@ -41,11 +52,7 @@ C_scale = abs(-(1e-5)^2 * evaldiff(f, 1e-5)); % Finding the infinity scaling fac
 U_comp = U_inf * C_scale; % Calculating the new velocity due to the scaling factor
 [~, idx_TE] = max(real(vertex(p))); % Finding the index of the trailing edge
 
-w_pre = prevertex(f); 
-beta_TE = angle(w_pre(idx_TE)); % Calclating the angle the trailing edge makes
-
-
-Gamma = 4 * pi * U_comp * sin(alpha - beta_TE); % Calculating the circulation
+Gamma = 4 * pi * U_comp * sin(alpha); % Calculating the circulation due to the kutta condition
 
 Fw  = U_comp*(exp(-1i*alpha)./W + exp(1i*alpha)*W) ...
       - 1i*Gamma/(2*pi)*log(W); % Finds the complex potential at every point
@@ -94,7 +101,6 @@ Cp_grid = 1 - (Vmag / U_inf).^2;
 % Setting these variables to surfaces
 X_surf  = Xp(:, end);
 Cp_surf = Cp_grid(:, end);
-
 
 % Finding the index of the leading edge
 [~, LE_idx] = min(X_surf);
