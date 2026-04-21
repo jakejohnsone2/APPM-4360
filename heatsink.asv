@@ -55,12 +55,11 @@ hold on
 % Turning the meshgrid complex
 zg = xg + 1i*yg;
 
-% Finding the temperature at each point in the meshgrid
+% Finding the temperature at each 
 in = inpolygon(xg, yg, real(vertices), imag(vertices));
 T_grid = nan(size(zg));
 T_grid(in) = phi(zg(in));
 
-% Plotting
 figure;
 pcolor(xg, yg, T_grid);
 shading interp;
