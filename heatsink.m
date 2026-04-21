@@ -1,8 +1,8 @@
 % Clear 
 clc; clear; close all; 
 
-temp_high = input("Temperature of Hot Side (^\circ C):");
-temp_air = input("Temperature of Surrounding Air (^\circ C):");
+temp_high = input("Temperature of Hot Side (" + char(176) + "C):");
+temp_air = input("Temperature of Surrounding Air (" + char(176) + "C):");
 
 
 % Define Constants
@@ -42,7 +42,8 @@ figure
 p = polygon(vertices);
 f = hplmap(p);
 plot(f);
-bdata = [temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_air; temp_high];
+bdata = temp_air*ones(numel(vertices), 1);
+bdata(end) = temp_high;
 phi = lapsolve(f,bdata);
 print("SC Map", "-r300", '-dpng')
 hold on 
@@ -66,7 +67,7 @@ pcolor(xg, yg, T_grid);
 shading interp;
 colormap("jet");
 c = colorbar;
-c.Label.String = 'Temperature (^\circ C)';
+c.Label.String = "Temperature (" + char(176) + "C):";
 xlabel('x'); ylabel('y');
 title('Heat Sink Temperature Distribution');
 axis equal; box on;
